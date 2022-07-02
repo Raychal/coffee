@@ -192,7 +192,52 @@ class _DetailPageState extends State<DetailPage> {
                           padding: EdgeInsets.all(5.0),
                           child: Text('${widget.coffee.desc}'),
                         ),
-                        SizedBox(height: 110,)
+                        SizedBox(height: 10,),
+
+                        Container(
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          height: 80,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [Colors.grey.withOpacity(0), Colors.transparent]
+                              )
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(padding: EdgeInsets.all(5.0)),
+                              Text("Rp. ", style: TextStyle(color: Colors.black, fontSize: 18),),
+                              Text("${widget.coffee.price}",
+                                style: GoogleFonts.manrope(
+                                    fontSize: 38, fontWeight: FontWeight.w600),),
+                              SizedBox(width: 85,),
+                              Container(
+                                width: 125,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(6)
+                                ),
+                                child: Center(
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(content: Text("Success"),
+                                              backgroundColor: Colors.green,
+                                              shape: StadiumBorder(),
+                                              behavior: SnackBarBehavior.floating,));
+                                      },
+                                      child: Text("Add to cart",
+                                        style: TextStyle(color: Colors.white),)),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -229,51 +274,6 @@ class _DetailPageState extends State<DetailPage> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 755),
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.grey.withOpacity(0.5), Colors.grey.shade700]
-                      )
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(padding: EdgeInsets.all(5.0)),
-                      Text("Rp. ", style: TextStyle(color: Colors.black, fontSize: 18),),
-                      Text("${widget.coffee.price}",
-                        style: GoogleFonts.manrope(
-                            fontSize: 38, fontWeight: FontWeight.w600),),
-                      SizedBox(width: 85,),
-                      Container(
-                        width: 125,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(6)
-                        ),
-                        child: Center(
-                          child: GestureDetector(
-                              onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text("Success"),
-                                      backgroundColor: Colors.green,
-                                      shape: StadiumBorder(),
-                                      behavior: SnackBarBehavior.floating,));
-                              },
-                              child: Text("Add to cart",
-                                style: TextStyle(color: Colors.white),)),
-                        ),
-                      )
-                    ],
-                  ),
-                )
               ],
             )
         ),

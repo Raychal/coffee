@@ -157,7 +157,6 @@ class _HomePageState extends State<HomePage> {
                   width: MediaQuery.of(context).size.width,
                   height: 270,
                   child: ListView.builder(
-                      shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: coffeeList.length,
                       itemBuilder: (context, index) {
