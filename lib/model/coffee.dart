@@ -1,10 +1,10 @@
 class Coffee {
-  String title;
-  String subtitle;
-  String desc;
-  String imageAsset;
-  String rating;
-  String price;
+  final String title;
+  final String subtitle;
+  final String desc;
+  final String imageAsset;
+  final String rating;
+  final String price;
 
   Coffee({
     required this.title,
@@ -194,3 +194,5 @@ var coffeeList = [
     price: '15.000'
   ),
 ];
+
+var coffeeListSearch = [];

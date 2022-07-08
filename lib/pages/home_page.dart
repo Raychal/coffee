@@ -34,6 +34,23 @@ class _HomePageState extends State<HomePage> {
     ],
   ];
 
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      coffeeListSearch = coffeeList;
+    });
+  }
+
+  onSearch(String search) {
+    setState(() {
+      coffeeListSearch = coffeeList
+          .where((coffee) => coffee.title.toLowerCase().contains(search))
+          .toList();
+    });
+  }
+
   // user tapped on coffee types
   void coffeeTypeSelected(int index) {
     setState(() {
@@ -114,9 +131,10 @@ class _HomePageState extends State<HomePage> {
                 width: MediaQuery.of(context).size.width,
                 height: 60,
                 child: TextField(
+                  onChanged: (value) => onSearch(value),
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search),
-                    hintText: "Find a burger",
+                    hintText: "Find your coffee...",
                     filled: true,
                     fillColor: Colors.grey.shade800,
                     border: OutlineInputBorder(
@@ -149,7 +167,7 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text("Most Popular",style: GoogleFonts.raleway(fontSize: 22,fontWeight: FontWeight.w600),),
+                  Text("Coffee",style: GoogleFonts.raleway(fontSize: 22,fontWeight: FontWeight.w600),),
                 ],
               ),
               SizedBox(height: 10,),
@@ -158,78 +176,80 @@ class _HomePageState extends State<HomePage> {
                   height: 270,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: coffeeList.length,
+                      itemCount: coffeeListSearch.length,
                       itemBuilder: (context, index) {
-                        final Coffee coffee = coffeeList[index];
-                        return GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => DetailPage(coffee: coffee)));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 25.0),
-                            child: Container(
-                              padding: EdgeInsets.all(12),
-                              width: 170,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Colors.black54,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // coffee image
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
-                                    child: Image.asset(coffee.imageAsset),
-                                  ),
-                                  //coffee name
-                                  Padding(
-                                    padding: 
-                                      const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          coffee.title,
-                                          style: TextStyle(fontSize: 12),
-                                        ),
-
-                                        SizedBox(
-                                          height: 4,
-                                        ),
-                                        Text(
-                                          coffee.subtitle,
-                                          style: TextStyle(color: Colors.grey[700]),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  
-                                  // price
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Rp. ' + coffee.price),
-                                        Container(
-                                          padding: EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                            color: Colors.green[800],
-                                            borderRadius: BorderRadius.circular(6),
-                                          ),
-                                          child: Icon(Icons.add),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                        return coffeeComponent(coffee: coffeeListSearch[index]);
                       },
                   ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  coffeeComponent({ required Coffee coffee}) {
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (_) => DetailPage(coffee: coffee)));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 25.0),
+        child: Container(
+          padding: EdgeInsets.all(12),
+          width: 170,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.black54,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // coffee image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(coffee.imageAsset),
+              ),
+              //coffee name
+              Padding(
+                padding:
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      coffee.title,
+                      style: TextStyle(fontSize: 12),
+                    ),
+
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      coffee.subtitle,
+                      style: TextStyle(color: Colors.grey[700]),
+                    )
+                  ],
+                ),
+              ),
+
+              // price
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Rp. ' + coffee.price),
+                    Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.green[800],
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Icon(Icons.add),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

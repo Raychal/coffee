@@ -210,7 +210,7 @@ class _DetailPageState extends State<DetailPage> {
                           child: Row(
                             children: [
                               Padding(padding: EdgeInsets.all(5.0)),
-                              Text("Rp. ", style: TextStyle(color: Colors.black, fontSize: 18),),
+                              Text("Rp. ", style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),),
                               Text("${widget.coffee.price}",
                                 style: GoogleFonts.manrope(
                                     fontSize: 38, fontWeight: FontWeight.w600),),
@@ -226,7 +226,7 @@ class _DetailPageState extends State<DetailPage> {
                                   child: GestureDetector(
                                       onTap: () {
                                         ScaffoldMessenger.of(context).showSnackBar(
-                                            SnackBar(content: Text("Success"),
+                                            SnackBar(content: Text("Success added to cart"),
                                               backgroundColor: Colors.green,
                                               shape: StadiumBorder(),
                                               behavior: SnackBarBehavior.floating,));
